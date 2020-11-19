@@ -24,6 +24,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Bienvenido al back-end del Sistema de seguimiento de prospectos." });
 });
 
+require("./app/routes/prospecto.routes")(app);
+
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

@@ -3,7 +3,7 @@ module.exports = app => {
 
   var router = require("express").Router();
 
-  // Create a new Tutorial
+  // Create a new Prospecto
   router.post("/", prospecto.create);
 
   // Retrieve all prospecto
@@ -12,13 +12,13 @@ module.exports = app => {
   // Retrieve all published prospecto
   router.get("/published", prospecto.findAllPublished);
 
-  // Retrieve a single Tutorial with id
+  // Retrieve a single Prospecto with id
   router.get("/:id", prospecto.findOne);
 
-  // Update a Tutorial with id
+  // Update a Prospecto with id
   router.put("/:id", prospecto.update);
 
-  // Delete a Tutorial with id
+  // Delete a Prospecto with id
   router.delete("/:id", prospecto.delete);
 
   // Delete all prospecto

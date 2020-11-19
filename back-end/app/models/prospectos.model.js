@@ -29,6 +29,9 @@ module.exports = (sequelize, Sequelize) => {
         },
         id_documento: {
             type: Sequelize.INTEGER
+        },
+        status_prospecto: {
+            type: Sequelize.STRING
         }
     });
 

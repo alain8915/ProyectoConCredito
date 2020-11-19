@@ -5,7 +5,7 @@ const Op = db.Sequelize.Op;
 // Create and Save a new Prospecto
 exports.create = (req, res) => {
   // Validate request
-  if (!req.body.title) {
+  if (!req.body) {
     res.status(400).send({
       message: "El contenido de los datos del Prospecto no puede estar vació!"
     });
@@ -13,20 +13,22 @@ exports.create = (req, res) => {
   }
 
   // Create a Prospecto
-  const Prospecto = {
+  const prospecto = {
     nombre: req.body.nombre,  
     primer_apellido: req.body.primer_apellido,
     segundo_apellido: req.body.segundo_apellido ? req.body.segundo_apellido : '' ,
     calle: req.body.calle,
-    numero: req.body,numero,
+    numero: req.body.numero,
     colonia: req.body.colonia,
     codigo_postal: req.body.codigo_postal,
     telefono: req.body.telefono,
-    rfc: req.body.rfc
+    rfc: req.body.rfc,
+    id_documento: req.body.id_documento,
+    status_prospecto: 'Enviado'
   };
 
   // Save Prospecto in the database
-  Prospecto.create(Prospecto)
+  Prospecto.create(prospecto)
     .then(data => {
       res.send(data);
     })
