@@ -2,17 +2,17 @@ const db = require("../models");
 const Prospecto = db.prospectos;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Prospecto
+// Crear y guardar un nuevo Prospecto
 exports.create = (req, res) => {
-  // Validate request
+  // Validando la peticion
   if (!req.body) {
     res.status(400).send({
-      message: "El contenido de los datos del Prospecto no puede estar vació!"
+      message: "El contenido de los datos del prospecto no puede estar vació!"
     });
     return;
   }
 
-  // Create a Prospecto
+  // Creando el objeto prospecto para el guardado en la BD
   const prospecto = {
     nombre: req.body.nombre,  
     primer_apellido: req.body.primer_apellido,
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
     status_prospecto: 'Enviado'
   };
 
-  // Save Prospecto in the database
+  // Guardando el objeto prospecto en la BD
   Prospecto.create(prospecto)
     .then(data => {
       res.send(data);
@@ -40,7 +40,7 @@ exports.create = (req, res) => {
     });
 };
 
-// Retrieve all Prospectos from the database.
+// Obtener todos los prospectos de la BD.
 exports.findAll = (req, res) => {
   const nombre = req.query.nombre;
   var condition = nombre ? { nombre: { [Op.like]: `%${nombre}%` } } : null;
@@ -52,12 +52,12 @@ exports.findAll = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Ocurrio un error al obtener los Prospectos."
+          err.message || "Ocurrió un error al obtener los Prospectos."
       });
     });
 };
 
-// Find a single Prospecto with an id
+// Buscar un prospecto con base a su ID
 exports.findOne = (req, res) => {
   const id = req.params.id;
 
@@ -67,12 +67,12 @@ exports.findOne = (req, res) => {
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error retrieving Prospecto with id=" + id
+        message: "Error en la busqueda de prospecto con ID=" + id
       });
     });
 };
 
-// Update a Prospecto by the id in the request
+// Actualiza un prospecto tomando su ID de la petición
 exports.update = (req, res) => {
   const id = req.params.id;
 
@@ -86,18 +86,18 @@ exports.update = (req, res) => {
         });
       } else {
         res.send({
-          message: `Cannot update Prospecto with id=${id}. Maybe Prospecto was not found or req.body is empty!`
+          message: `No se puede actualizar el prospecto con id=${id}. Tal vez el prospecto no se encuentra registrado o la petición esta vaciá!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Error updating Prospecto with id=" + id
+        message: "Error actualizando el prospecto con id=" + id
       });
     });
 };
 
-// Delete a Prospecto with the specified id in the request
+// Eliminando un prospecto con ID especificado en la petición
 exports.delete = (req, res) => {
   const id = req.params.id;
 
@@ -107,40 +107,40 @@ exports.delete = (req, res) => {
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Prospecto was deleted successfully!"
+          message: "El prospecto fue eliminado correctamente!"
         });
       } else {
         res.send({
-          message: `Cannot delete Prospecto with id=${id}. Maybe Prospecto was not found!`
+          message: `No se pudo eliminar el prospecto con id=${id}. Tal vez el prospecto no se encontró!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Prospecto with id=" + id
+        message: "Ocurrio un error al eliminar el prospecto con id=" + id
       });
     });
 };
 
-// Delete all Prospectos from the database.
+// Elimina todos los prospectos de la BD.
 exports.deleteAll = (req, res) => {
   Prospecto.destroy({
     where: {},
     truncate: false
   })
     .then(nums => {
-      res.send({ message: `${nums} Prospectos were deleted successfully!` });
+      res.send({ message: `${nums} Los prospectos fueron eliminados satisfactoriamente!` });
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while removing all Prospectos."
+          err.message || "Ocurrio un error mientras se eliminaban los prospectos."
       });
     });
 };
 
 // find all published Prospecto
-exports.findAllPublished = (req, res) => {
+/* exports.findAllPublished = (req, res) => {
   Prospecto.findAll({ where: { published: true } })
     .then(data => {
       res.send(data);
@@ -151,4 +151,4 @@ exports.findAllPublished = (req, res) => {
           err.message || "Some error occurred while retrieving Prospectos."
       });
     });
-};
+}; */
