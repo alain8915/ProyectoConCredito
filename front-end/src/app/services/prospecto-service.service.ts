@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-const baseUrl = 'http://localhost:8080/api/prospecto';
+const baseUrl = '/api/prospecto';
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class ProspectoService {
     return this.http.delete(baseUrl);
   }
 
-  findByTitle(title: any): Observable<any> {
-    return this.http.get(`${baseUrl}?title=${title}`);
+  findByName(nombre: any): Observable<any> {
+    return this.http.get(`${baseUrl}?title=${nombre}`);
   }
 }

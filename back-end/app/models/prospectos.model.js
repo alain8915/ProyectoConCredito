@@ -27,10 +27,10 @@ module.exports = (sequelize, Sequelize) => {
         rfc: {
             type: Sequelize.STRING
         },
-        id_documento: {
-            type: Sequelize.INTEGER
-        },
         status_prospecto: {
+            type: Sequelize.STRING
+        },
+        observaciones: {
             type: Sequelize.STRING
         }
     });

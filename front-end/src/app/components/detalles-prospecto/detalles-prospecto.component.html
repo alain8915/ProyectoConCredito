@@ -1,0 +1,68 @@
+<div style="width: 400px; margin: auto;">
+    <div *ngIf="currentProspecto" class="edit-form">
+        <h4>Evaluacion de Prospecto</h4>
+        <form>
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" id="nombre" [(ngModel)]="currentProspecto.nombre"
+                        name="nombre" readonly />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="primer_apellido">Primer apellido</label>
+                    <input type="text" class="form-control" id="primer_apellido"
+                        [(ngModel)]="currentProspecto.primer_apellido" name="primer_apellido" readonly />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="primer_apellido">Segundo apellido</label>
+                    <input type="text" class="form-control" id="segundo_apellido"
+                        [(ngModel)]="currentProspecto.segundo_apellido" name="segundo_apellido" readonly />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="calle">Calle</label>
+                <input type="text" class="form-control" id="calle" [(ngModel)]="currentProspecto.calle" name="calle"
+                    readonly />
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-2">
+                    <label for="numero">Numero</label>
+                    <input type="text" class="form-control" id="numero" [(ngModel)]="currentProspecto.numero" name="numero"
+                        readonly />
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="colonia">Colonia</label>
+                    <input type="text" class="form-control" id="colonia" [(ngModel)]="currentProspecto.colonia" name="colonia"
+                        readonly />
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="codigo_postal">Código Postal</label>
+                    <input type="text" class="form-control" id="codigo_postal" [(ngModel)]="currentProspecto.codigo_postal" name="codigo_postal"
+                        readonly />
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label><strong>Status:</strong></label>
+                {{ currentProspecto.status_prospecto }}
+            </div>
+        </form>
+
+        <button type="button" class="btn btn-warning marginButton" (click)="updateStatus('Rechazado')">
+            Rechazado
+        </button>
+        <button type="button" class="btn btn-primary marginButton" (click)="updateStatus('Autorizado')">
+            Autorizado
+        </button>
+
+        <button type="button" class="btn btn-danger marginButton" (click)="deleteProspecto()">
+            Eliminar
+        </button>
+    </div>
+
+    <div *ngIf="!currentProspecto">
+        <br />
+        <p>No se puede acceder a los datos del prospecto</p>
+    </div>
+</div>

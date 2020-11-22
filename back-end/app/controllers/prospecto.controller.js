@@ -23,8 +23,8 @@ exports.create = (req, res) => {
     codigo_postal: req.body.codigo_postal,
     telefono: req.body.telefono,
     rfc: req.body.rfc,
-    id_documento: req.body.id_documento,
-    status_prospecto: 'Enviado'
+    status_prospecto: 'Enviado',
+    observaciones: ''
   };
 
   // Guardando el objeto prospecto en la BD

@@ -1,0 +1,68 @@
+<div style="width: 400px; margin: auto;">
+    <h4>Captura de prospecto</h4>
+    <form novalidate>
+
+        <div class="form-group">
+            <label for="nombre">Nombre(requerido)</label>
+            <input type="text" class="form-control" id="nombre" required [(ngModel)]="prospecto.nombre" name="nombre" />
+        </div>
+
+        <div class="form-group">
+            <label for="primer_apellido">Primer Apellido(requerido)</label>
+            <input class="form-control" id="primer_apellido" required [(ngModel)]="prospecto.primer_apellido"
+                name="primer_apellido" />
+        </div>
+
+        <div class="form-group">
+            <label for="segundo_apellido">Segundo Apellido</label>
+            <input class="form-control" id="segundo_apellido" [(ngModel)]="prospecto.segundo_apellido"
+                name="segundo_apellido" />
+        </div>
+
+        <div class="form-group">
+            <label for="calle">Calle(requerido)</label>
+            <input class="form-control" id="calle" required [(ngModel)]="prospecto.calle" name="calle" />
+        </div>
+
+        <div class="form-group">
+            <label for="numero">Numero(requerido)</label>
+            <input class="form-control" id="numero" required [(ngModel)]="prospecto.numero" name="numero" />
+        </div>
+
+        <div class="form-group">
+            <label for="colonia">Colonia(requerido)</label>
+            <input class="form-control" id="colonia" required [(ngModel)]="prospecto.colonia" name="colonia" />
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="codigo_postal">Código Postal(requerido)</label>
+                <input class="form-control" id="codigo_postal" required [(ngModel)]="prospecto.codigo_postal"
+                    name="codigo_postal" />
+            </div>
+
+            <div class="form-group col-md-6">
+                <label for="telefono">Teléfono(requerido)</label>
+                <input class="form-control" id="telefono" required [(ngModel)]="prospecto.telefono" name="telefono" />
+            </div>
+
+        </div>
+
+        <div class="form-group">
+            <label for="rfc">RFC(requerido)</label>
+            <input class="form-control" id="rfc" minlength="13" maxlength="15" required [(ngModel)]="prospecto.rfc"
+                name="rfc" aria-describedby="rfcHelpBlock" />
+            <small id="rfcHelpBlock" class="form-text text-muted">
+                El RFC debe estar compuesto por números y letras de al menos 13 caracteres y máximo 15
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="">Agregar documentos del prospecto</label>
+            <input type="file" class="form-control-file" id="documentosProspecto">
+        </div>
+
+        <button type="submit" (click)="guardarProspecto()" class="btn btn-success">Guardar</button>
+    </form>
+
+</div>

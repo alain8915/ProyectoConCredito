@@ -10,7 +10,7 @@ module.exports = app => {
   router.get("/", prospecto.findAll);
 
   // Retrieve all published prospecto
-  router.get("/published", prospecto.findAllPublished);
+  /* router.get("/published", prospecto.findAllPublished); */
 
   // Retrieve a single Prospecto with id
   router.get("/:id", prospecto.findOne);

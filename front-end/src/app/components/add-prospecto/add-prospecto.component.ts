@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProspectoService } from 'src/app/services/prospecto-service.service';
+import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-prospecto',
@@ -10,16 +12,17 @@ export class AddProspectoComponent implements OnInit {
   prospecto = {
     nombre: '',
     primer_apellido: '',
+    segundo_apellido: '',
     calle: '',
     numero: null,
     colonia: ' ',
     codigo_postal: null,
     telefono: null,
-    rfc: ' ',
-    id_documento: null
+    rfc: ' '
   };
+  submitted = false;
 
-  constructor(private prospectoService: ProspectoService ) { }
+  constructor(private prospectoService: ProspectoService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -28,38 +31,51 @@ export class AddProspectoComponent implements OnInit {
     const data = {
       nombre: this.prospecto.nombre,
       primer_apellido: this.prospecto.primer_apellido,
+      segundo_apellido: this.prospecto.segundo_apellido ? this.prospecto.segundo_apellido : '',
       calle: this.prospecto.calle,
       numero: this.prospecto.numero,
       colonia: this.prospecto.colonia,
       codigo_postal: this.prospecto.codigo_postal,
       telefono: this.prospecto.telefono,
-      rfc: this.prospecto.rfc,
-      id_documento: this.prospecto.id_documento
-
+      rfc: this.prospecto.rfc
     };
 
     this.prospectoService.create(data)
       .subscribe(
         response => {
+          Swal.fire({
+            title: 'El prospecto se ha guardado con éxito',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1500
+          });
           console.log(response);
+          this.router.navigate(['/prospectos']);
+          this.submitted = true;
         },
         error => {
           console.log(error);
+          Swal.fire({
+            title: 'Ocurrio un error en el guardado del prospecto',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500
+          });
         });
   }
 
   nuevoProspecto(): void {
-
+    this.submitted = false;
     this.prospecto = {
       nombre: '',
       primer_apellido: '',
+      segundo_apellido: '',
       calle: '',
       numero: null,
       colonia: ' ',
       codigo_postal: null,
       telefono: null,
-      rfc: ' ',
-      id_documento: null
+      rfc: ' '
     };
   }
 
