@@ -79,4 +79,20 @@ export class AddProspectoComponent implements OnInit {
     };
   }
 
+  validarSalida(): void {
+    Swal.fire({
+      title: 'Esta seguro que desea salir?',
+      text: 'Si sale perderá toda la captura',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.router.navigate(['/prospectos']);
+
+      }
+    });
+  }
+
 }
