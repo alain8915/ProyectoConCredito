@@ -1,6 +1,6 @@
 <div style="width: 400px; margin: auto;">
     <h4>Captura de prospecto</h4>
-    <form novalidate>
+    <form id="datosProspecto" name="datosProspecto" (ngSubmit)="guardarProspecto()">
 
         <div class="form-group">
             <label for="nombre">Nombre(requerido)</label>
@@ -62,7 +62,7 @@
             <input type="file" class="form-control-file" id="documentosProspecto">
         </div>
 
-        <button type="submit" (click)="guardarProspecto()" class="btn btn-success">Guardar</button>
+        <button type="submit" class="btn btn-success">Guardar</button>
         <button style="margin-left: 20px;" type="button" (click)="validarSalida()" class="btn btn-danger">Salir</button>
     </form>
 
