@@ -75,7 +75,6 @@ exports.findOne = (req, res) => {
 // Actualiza un prospecto tomando su ID de la petición
 exports.update = (req, res) => {
   const id = req.params.id;
-
   Prospecto.update(req.body, {
     where: { id: id }
   })

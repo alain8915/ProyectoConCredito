@@ -15,12 +15,11 @@ export class AddProspectoComponent implements OnInit {
     segundo_apellido: '',
     calle: '',
     numero: null,
-    colonia: ' ',
+    colonia: '',
     codigo_postal: null,
     telefono: null,
-    rfc: ' '
+    rfc: ''
   };
-  submitted = false;
 
   constructor(private prospectoService: ProspectoService, private router: Router) { }
 
@@ -51,7 +50,6 @@ export class AddProspectoComponent implements OnInit {
           });
           console.log(response);
           this.router.navigate(['/prospectos']);
-          this.submitted = true;
         },
         error => {
           console.log(error);
@@ -65,7 +63,6 @@ export class AddProspectoComponent implements OnInit {
   }
 
   nuevoProspecto(): void {
-    this.submitted = false;
     this.prospecto = {
       nombre: '',
       primer_apellido: '',
