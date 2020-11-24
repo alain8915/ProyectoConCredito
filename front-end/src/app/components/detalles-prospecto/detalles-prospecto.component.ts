@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Renderer2, ViewChild } from '@angular/core';
 import { ProspectoService } from 'src/app/services/prospecto-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -23,7 +23,7 @@ export class DetallesProspectoComponent implements OnInit {
     status_prospecto: null,
     observaciones: ''
   };
-  radioStatus = true;
+
   constructor(private prospectoService: ProspectoService,
               private route: ActivatedRoute,
               private router: Router) { }
@@ -41,12 +41,20 @@ export class DetallesProspectoComponent implements OnInit {
 
         },
         error => {
+          Swal.fire({
+            title: 'Ocurrió un error al obtener los datos del prospecto',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500
+          });
+          this.router.navigate(['/prospectos']);
           console.log(error);
         });
   }
 
   evaluarProspecto( event: any): void {
     this.currentProspecto.status_prospecto = event.target.value;
+    this.currentProspecto.observaciones = '';
   }
 
   updateStatus(): void {
@@ -75,7 +83,7 @@ export class DetallesProspectoComponent implements OnInit {
         },
         error => {
           Swal.fire({
-            title: 'Ocurrio un error al evaluar al prospecto',
+            title: 'Ocurrió un error al evaluar al prospecto',
             icon: 'error',
             showConfirmButton: false,
             timer: 1500

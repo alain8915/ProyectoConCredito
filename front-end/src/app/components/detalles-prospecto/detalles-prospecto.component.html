@@ -1,23 +1,22 @@
 <div style="width: 400px; margin: auto;">
     <div *ngIf="currentProspecto" class="edit-form">
-        <h4>Evaluacion de Prospecto</h4>
+        <h2>Evaluacion de Prospecto</h2>
+        <small class="form-text text-muted">Los datos marcados con un asterisco son obligatorios</small>
         <form id="evaluacionForm" name="evaluacionForm" (ngSubmit)="updateStatus()" novalidate #evaluacionForm="ngForm">
-            <div class="form-row">
-                <div class="form-group col-md-4">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" id="nombre" [(ngModel)]="currentProspecto.nombre"
-                        name="nombre" readonly />
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="primer_apellido">Primer apellido</label>
-                    <input type="text" class="form-control" id="primer_apellido"
-                        [(ngModel)]="currentProspecto.primer_apellido" name="primer_apellido" readonly />
-                </div>
-                <div class="form-group col-md-4">
-                    <label for="primer_apellido">Segundo apellido</label>
-                    <input type="text" class="form-control" id="segundo_apellido"
-                        [(ngModel)]="currentProspecto.segundo_apellido" name="segundo_apellido" readonly />
-                </div>
+            <div class="form-group">
+                <label for="nombre">Nombre</label>
+                <input type="text" class="form-control" id="nombre" [(ngModel)]="currentProspecto.nombre" name="nombre"
+                    readonly />
+            </div>
+            <div class="form-group">
+                <label for="primer_apellido">Primer apellido</label>
+                <input type="text" class="form-control" id="primer_apellido"
+                    [(ngModel)]="currentProspecto.primer_apellido" name="primer_apellido" readonly />
+            </div>
+            <div class="form-group">
+                <label for="primer_apellido">Segundo apellido</label>
+                <input type="text" class="form-control" id="segundo_apellido"
+                    [(ngModel)]="currentProspecto.segundo_apellido" name="segundo_apellido" readonly />
             </div>
             <div class="form-group">
                 <label for="calle">Calle</label>
@@ -30,18 +29,33 @@
                     <input type="text" class="form-control" id="numero" [(ngModel)]="currentProspecto.numero"
                         name="numero" readonly />
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-10">
                     <label for="colonia">Colonia</label>
                     <input type="text" class="form-control" id="colonia" [(ngModel)]="currentProspecto.colonia"
                         name="colonia" readonly />
                 </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" class="form-control" id="telefono" [(ngModel)]="currentProspecto.telefono"
+                        name="telefono" readonly />
+                </div>
+
                 <div class="form-group col-md-4">
                     <label for="codigo_postal">Código Postal</label>
                     <input type="text" class="form-control" id="codigo_postal"
                         [(ngModel)]="currentProspecto.codigo_postal" name="codigo_postal" readonly />
                 </div>
-
             </div>
+
+            <div class="form-group">
+                <label for="rfc">RFC</label>
+                <input type="text" class="form-control" id="rfc" [(ngModel)]="currentProspecto.rfc" name="rfc"
+                    readonly />
+            </div>
+
 
             <div class="form-group">
                 <label>Status</label>
@@ -50,23 +64,25 @@
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" type="radio" name="radioStatus" id="autorizado"
-                    (change)="evaluarProspecto($event)" value="autorizado" required>
+                <input class="form-check-input" type="radio" name="radioStatus" id="autorizado" #autorizado
+                    (change)="evaluarProspecto($event)" value="Autorizado"
+                    [(ngModel)]="currentProspecto.status_prospecto">
                 <label class="form-check-label" for="autorizado">
                     Autorizado
                 </label>
             </div>
 
             <div class="form-check" style="margin-bottom: 10px;">
-                <input class="form-check-input" type="radio" name="radioStatus" id="rechazado"
-                    (change)="evaluarProspecto($event)" value="rechazado">
+                <input class="form-check-input" type="radio" name="radioStatus" id="rechazado" #rechazado
+                    (change)="evaluarProspecto($event)" value="Rechazado"
+                    [(ngModel)]="currentProspecto.status_prospecto">
                 <label class="form-check-label" for="rechazado">
                     Rechazado
                 </label>
             </div>
 
-            <div class="form-group" *ngIf="currentProspecto.status_prospecto === 'rechazado'">
-                <label for="observacionLabel">Observaciones de rechazo</label>
+            <div class="form-group" *ngIf="currentProspecto.status_prospecto === 'Rechazado'">
+                <label for="observacionLabel">Observaciones de rechazo*</label>
                 <textarea class="form-control" id="observaciones" name="observaciones" rows="3"
                     [(ngModel)]="currentProspecto.observaciones" required></textarea>
             </div>
@@ -83,8 +99,4 @@
 
     </div>
 
-    <div *ngIf="!currentProspecto">
-        <br />
-        <p>No se puede acceder a los datos del prospecto</p>
-    </div>
 </div>

@@ -1,5 +1,5 @@
 <div style="width: 400px; margin: auto;">
-    <h4>Captura de prospecto</h4>
+    <h2>Captura de prospecto</h2>
     <small class="form-text text-muted">Los datos marcados con un asterisco son obligatorios</small>
     <form id="datosProspecto" name="datosProspecto" (ngSubmit)="guardarProspecto()" novalidate
         #formularioDatosProspecto="ngForm">
@@ -58,11 +58,6 @@
             <small id="rfcHelpBlock" class="form-text text-muted">
                 El RFC debe estar compuesto por números y letras de al menos 13 caracteres y máximo 15
             </small>
-        </div>
-
-        <div class="form-group">
-            <label for="">Agregar documentos del prospecto</label>
-            <input type="file" class="form-control-file" id="documentosProspecto">
         </div>
 
         <button type="submit" [disabled]="formularioDatosProspecto.invalid" class="btn btn-success">Enviar</button>
