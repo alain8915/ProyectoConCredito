@@ -1,27 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProspectoService } from 'src/app/services/prospecto-service.service';
+import { DatosProspecto } from 'src/app/models/datosProspecto.model';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Subject} from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-prospecto',
   templateUrl: './add-prospecto.component.html',
   styleUrls: ['./add-prospecto.component.css']
 })
-export class AddProspectoComponent implements OnInit {
-  prospecto = {
-    nombre: '',
-    primer_apellido: '',
-    segundo_apellido: '',
-    calle: '',
-    numero: null,
-    colonia: '',
-    codigo_postal: null,
-    telefono: null,
-    rfc: ''
-  };
+export class AddProspectoComponent implements OnInit, OnDestroy {
+  prospecto: DatosProspecto = new DatosProspecto();
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(private prospectoService: ProspectoService, private router: Router) { }
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();  }
 
   ngOnInit(): void {
   }
@@ -39,7 +36,7 @@ export class AddProspectoComponent implements OnInit {
       rfc: this.prospecto.rfc
     };
 
-    this.prospectoService.create(data)
+    this.prospectoService.create(data).pipe(takeUntil(this.unsubscribe))
       .subscribe(
         response => {
           Swal.fire({
@@ -54,7 +51,7 @@ export class AddProspectoComponent implements OnInit {
         error => {
           console.log(error);
           Swal.fire({
-            title: 'Ocurrio un error en el guardado del prospecto',
+            title: 'Ocurrió un error en el guardado del prospecto',
             icon: 'error',
             showConfirmButton: false,
             timer: 1500
@@ -63,17 +60,9 @@ export class AddProspectoComponent implements OnInit {
   }
 
   nuevoProspecto(): void {
-    this.prospecto = {
-      nombre: '',
-      primer_apellido: '',
-      segundo_apellido: '',
-      calle: '',
-      numero: null,
-      colonia: ' ',
-      codigo_postal: null,
-      telefono: null,
-      rfc: ' '
-    };
+
+    this.prospecto = new DatosProspecto();
+
   }
 
   validarSalida(): void {

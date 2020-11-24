@@ -1,28 +1,19 @@
-import { Component, OnInit, ElementRef, Renderer2, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { ProspectoService } from 'src/app/services/prospecto-service.service';
+import { DatosProspecto } from 'src/app/models/currentProspecto.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { Subject} from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-detalles-prospecto',
   templateUrl: './detalles-prospecto.component.html',
   styleUrls: ['./detalles-prospecto.component.css']
 })
-export class DetallesProspectoComponent implements OnInit {
-  currentProspecto = {
-    id: null,
-    nombre: '',
-    primer_apellido: '',
-    segundo_apellido: '',
-    calle: '',
-    numero: null,
-    colonia: ' ',
-    codigo_postal: null,
-    telefono: null,
-    rfc: ' ',
-    status_prospecto: null,
-    observaciones: ''
-  };
+export class DetallesProspectoComponent implements OnInit, OnDestroy {
+  currentProspecto: DatosProspecto = new DatosProspecto();
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(private prospectoService: ProspectoService,
               private route: ActivatedRoute,
@@ -32,8 +23,13 @@ export class DetallesProspectoComponent implements OnInit {
     this.getProspecto(this.route.snapshot.paramMap.get('id'));
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
   getProspecto(id: string | null): void {
-    this.prospectoService.get(id)
+    this.prospectoService.get(id).pipe(takeUntil(this.unsubscribe))
       .subscribe(
         data => {
           this.currentProspecto = data;
@@ -68,7 +64,7 @@ export class DetallesProspectoComponent implements OnInit {
       data.observaciones = '';
     }
 
-    this.prospectoService.update(this.currentProspecto.id, data)
+    this.prospectoService.update(this.currentProspecto.id, data).pipe(takeUntil(this.unsubscribe))
       .subscribe(
         response => {
           Swal.fire({
@@ -78,7 +74,6 @@ export class DetallesProspectoComponent implements OnInit {
             timer: 1500
           });
           this.router.navigate(['/prospectos']);
-          // this.currentProspecto.status_prospecto = status;
           console.log(response);
         },
         error => {
@@ -111,7 +106,7 @@ export class DetallesProspectoComponent implements OnInit {
   }
 
   deleteProspecto(): void {
-    this.prospectoService.delete(this.currentProspecto.id)
+    this.prospectoService.delete(this.currentProspecto.id).pipe(takeUntil(this.unsubscribe))
       .subscribe(
         response => {
           console.log(response);

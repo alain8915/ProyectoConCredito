@@ -1,24 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy  } from '@angular/core';
 import { ProspectoService } from 'src/app/services/prospecto-service.service';
 import { Router } from '@angular/router';
+import { Subject} from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { DatosProspecto } from 'src/app/models/datosProspecto.model';
+
 
 @Component({
   selector: 'app-lista-prospectos',
   templateUrl: './lista-prospectos.component.html',
   styleUrls: ['./lista-prospectos.component.css']
 })
-export class ListaProspectosComponent implements OnInit {
-
+export class ListaProspectosComponent implements OnInit, OnDestroy {
   prospectos: any;
-  currentProspecto = {
-    id: null,
-    nombre: '',
-    primer_apellido: '',
-    segundo_apellido: '',
-    status_prospecto: ''
-  };
+  currentProspecto: DatosProspecto = new DatosProspecto();
   currentIndex = -1;
-  nombre = '';
+  private unsubscribe: Subject<void> = new Subject();
 
   constructor(private prospectoService: ProspectoService, private router: Router) { }
 
@@ -26,8 +23,14 @@ export class ListaProspectosComponent implements OnInit {
     this.obtenerProspectos();
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
+
   obtenerProspectos(): void {
-    this.prospectoService.getAll()
+    this.prospectoService.getAll().pipe(takeUntil(this.unsubscribe))
       .subscribe(
         data => {
           this.prospectos = data;
@@ -40,13 +43,7 @@ export class ListaProspectosComponent implements OnInit {
 
   refreshList(): void {
     this.obtenerProspectos();
-    this.currentProspecto = {
-      id: null,
-      nombre: '',
-      primer_apellido: '',
-      segundo_apellido: '',
-      status_prospecto: ''
-    };
+    this.currentProspecto = new DatosProspecto();
     this.currentIndex = -1;
   }
 
@@ -62,23 +59,11 @@ export class ListaProspectosComponent implements OnInit {
   }
 
   eliminarTodosLosProspectos(): void {
-    this.prospectoService.deleteAll()
+    this.prospectoService.deleteAll().pipe(takeUntil(this.unsubscribe))
       .subscribe(
         response => {
           console.log(response);
           this.obtenerProspectos();
-        },
-        error => {
-          console.log(error);
-        });
-  }
-
-  buscarProspecto(): void {
-    this.prospectoService.findByName(this.nombre)
-      .subscribe(
-        data => {
-          this.prospectos = data;
-          console.log(data);
         },
         error => {
           console.log(error);
