@@ -23,9 +23,12 @@ exports.create = (req, res) => {
     codigo_postal: req.body.codigo_postal,
     telefono: req.body.telefono,
     rfc: req.body.rfc,
+    nombreDocumento: req.body.nombreDocumento,
+    dataDocumento: req.body.dataDocumento,
     status_prospecto: 'Enviado',
     observaciones: ''
   };
+
 
   // Guardando el objeto prospecto en la BD
   Prospecto.create(prospecto)
@@ -35,7 +38,7 @@ exports.create = (req, res) => {
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Ocurrio un error en el guardado de un nuevo prospecto."
+          err.message || "Ocurrió un error en el guardado de un nuevo prospecto."
       });
     });
 };
@@ -138,16 +141,3 @@ exports.deleteAll = (req, res) => {
     });
 };
 
-// find all published Prospecto
-/* exports.findAllPublished = (req, res) => {
-  Prospecto.findAll({ where: { published: true } })
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving Prospectos."
-      });
-    });
-}; */

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subject} from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DatosProspecto } from 'src/app/models/datosProspecto.model';
-
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-lista-prospectos',
@@ -37,6 +37,12 @@ export class ListaProspectosComponent implements OnInit, OnDestroy {
           console.log(data);
         },
         error => {
+          Swal.fire({
+            title: 'Ocurrió un error al obtener los prospectos',
+            icon: 'error',
+            showConfirmButton: false,
+            timer: 1500
+          });
           console.log(error);
         });
   }

@@ -27,6 +27,12 @@ module.exports = (sequelize, Sequelize) => {
         rfc: {
             type: Sequelize.STRING
         },
+        nombreDocumento: {
+            type: Sequelize.STRING
+        },
+        dataDocumento: {
+            type: Sequelize.BLOB
+        },
         status_prospecto: {
             type: Sequelize.STRING
         },

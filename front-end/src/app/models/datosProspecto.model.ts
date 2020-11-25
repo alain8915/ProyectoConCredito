@@ -9,6 +9,8 @@ export class DatosProspecto {
     codigo_postal: number;
     telefono: number;
     rfc: string;
+    nombreDocumento: string;
+    dataDocumento: Blob;
 }
 
 

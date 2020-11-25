@@ -60,6 +60,21 @@
             </small>
         </div>
 
+        <div class="form-group">
+            <div>
+                <div>
+                    <label for="">Documentos*</label>
+                    <small class="form-text text-muted">Ingrese el nombre del documento</small>
+                    <input class="form-control" #nombreDocumento type="text" id="nombreDocumento"
+                        name="nombreDocumento" required [(ngModel)]="prospecto.nombreDocumento">
+                    <img #imagenCSF src="../../../../../assets/descarga.jpg" (click)="subirArchivoCSF()">
+                </div>
+                <input #archivoCSF type="file" style="display: none" id="idPdf" accept="application/pdf"
+                    (change)="cambioArchivoCSF()" required>
+                <small id="card-error-pdf" class="text-danger" role="alert"></small>
+            </div>
+        </div>
+
         <button type="submit" [disabled]="formularioDatosProspecto.invalid" class="btn btn-success">Enviar</button>
         <button style="margin-left: 20px;" type="button" (click)="validarSalida()" class="btn btn-danger">Salir</button>
     </form>

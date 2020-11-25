@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { ProspectoService } from 'src/app/services/prospecto-service.service';
 import { DatosProspecto } from 'src/app/models/datosProspecto.model';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { Subject} from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -14,11 +14,17 @@ import { takeUntil } from 'rxjs/operators';
 export class AddProspectoComponent implements OnInit, OnDestroy {
   prospecto: DatosProspecto = new DatosProspecto();
   private unsubscribe: Subject<void> = new Subject();
+  archivoBase64: any;
+  @ViewChild('archivoCSF', { static: false }) archivoCSF: any;
+  @ViewChild('imagenCSF', { static: false }) imagenCSF: any;
+
 
   constructor(private prospectoService: ProspectoService, private router: Router) { }
+
   ngOnDestroy(): void {
     this.unsubscribe.next();
-    this.unsubscribe.complete();  }
+    this.unsubscribe.complete();
+  }
 
   ngOnInit(): void {
   }
@@ -33,7 +39,9 @@ export class AddProspectoComponent implements OnInit, OnDestroy {
       colonia: this.prospecto.colonia,
       codigo_postal: this.prospecto.codigo_postal,
       telefono: this.prospecto.telefono,
-      rfc: this.prospecto.rfc
+      rfc: this.prospecto.rfc,
+      nombreDocumento: this.prospecto.nombreDocumento,
+      dataDocumento: this.archivoBase64.toString()
     };
 
     this.prospectoService.create(data).pipe(takeUntil(this.unsubscribe))
@@ -81,4 +89,32 @@ export class AddProspectoComponent implements OnInit, OnDestroy {
     });
   }
 
-}
+  subirArchivoCSF(): void {
+    this.archivoCSF.nativeElement.click();
+  }
+
+  cambioArchivoCSF(): void {
+
+    const files: { [key: string]: File } = this.archivoCSF.nativeElement.files;
+    let reader;
+
+    if (files && files[0]) {
+      // valida extensión
+        console.log('hay archivo');
+
+        reader = new FileReader();
+
+        reader.onload = (e: any) => {
+          console.log('set src pdf');
+          this.archivoBase64 = e.target.result;
+        };
+
+        reader.readAsDataURL(files[0]);
+        this.imagenCSF.nativeElement.setAttribute(
+          'src',
+          '../../../../../assets/pdf.jpg'
+        );
+
+      }
+    }
+  }
